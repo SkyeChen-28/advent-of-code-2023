@@ -1,7 +1,5 @@
 # Day 1: Trebuchet?!
 
-# import re
-
 def parse_token(token: str) -> int:
     
     if '0' <= token[0] <= '9':
@@ -32,7 +30,6 @@ def extract_row_value(line: str) -> int:
     
     right = len(line) - 1
     left = 0
-    # isDigit = re.compile(r'\d')
     
     left_token = line[left:]
     right_token = line[right:]
