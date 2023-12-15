@@ -2,22 +2,50 @@
 
 # import re
 
+def parse_token(token: str) -> int:
+    
+    if '0' <= token[0] <= '9':
+        return int(token[0])
+    
+    valid_digits = {
+        'one': 1,
+        'two': 2,
+        'three': 3,
+        'four': 4,
+        'five': 5,
+        'six': 6,
+        'seven': 7,
+        'eight': 8,
+        'nine': 9
+    }
+    for key in valid_digits:
+        if token.startswith(key):
+            return valid_digits[key]
+        
+    return -1
+
 def extract_row_value(line: str) -> int:
     
     if line == '':
         return 0
     
+    
     right = len(line) - 1
     left = 0
     # isDigit = re.compile(r'\d')
     
-    while not('0' <= line[left] <= '9'):
+    left_token = line[left:]
+    right_token = line[right:]
+    
+    while parse_token(left_token) == -1:
         left += 1
+        left_token = line[left:]
             
-    while not('0' <= line[right] <= '9'):
+    while parse_token(right_token) == -1:
         right -= 1
+        right_token = line[right:]
         
-    calibration_value = 10 * int(line[left]) + int(line[right])
+    calibration_value = 10 * int(parse_token(left_token)) + int(parse_token(right_token))
     return calibration_value
 
 def extract_total_calibration_value(calibration_document: str) -> int:
@@ -30,7 +58,7 @@ def extract_total_calibration_value(calibration_document: str) -> int:
     return calibration_value
 
 def main():
-
+    
     calibration_document = '''
 jjfvnnlfivejj1
 6fourfour
